@@ -1,3 +1,4 @@
+import random
 import string
 import time
 
@@ -22,16 +23,20 @@ class C(BaseConstants):
 
 
 class Subsession(BaseSubsession):
+    random_seed = models.IntegerField()
     payment_per_correct = models.CurrencyField()
     time_for_task = models.IntegerField()
     lookup_table = models.StringField()
     word = models.StringField()
 
     def setup_round(self):
+        if self.round_number == 1:
+            self.random_seed = self.session.config.get("random_seed",12345678)
+            random.seed(self.random_seed)
         self.payment_per_correct = Currency(0.10)
         self.time_for_task = C.TIME_FOR_TASK
         self.lookup_table = C.LOOKUP_TABLES[(self.round_number-1) % 3]
-        self.word = "ABABA"
+        self.word = "".join(random.choices(string.ascii_uppercase, k=5))
 
     @property
     def lookup_dict(self):

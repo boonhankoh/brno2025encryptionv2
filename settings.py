@@ -7,6 +7,7 @@ SESSION_CONFIGS = [
             "encryption"
         ],
         num_demo_participants=2,
+        # random_seed = 12345,
     ),
     dict(
         name="splash_demo",
