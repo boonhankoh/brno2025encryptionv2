@@ -12,6 +12,11 @@ class C(BaseConstants):
     NAME_IN_URL = 'encryption'
     PLAYERS_PER_GROUP = None
     NUM_ROUNDS = 3
+    LOOKUP_TABLES = [
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+        "ZYXWVUTSRQPONMLKJIHGFEDCBA",
+        "FEDCBAGHIJKLMZYXWVUTSRQPON",
+    ]
 
 
 class Subsession(BaseSubsession):
@@ -21,7 +26,7 @@ class Subsession(BaseSubsession):
 
     def setup_round(self):
         self.payment_per_correct = Currency(0.10)
-        self.lookup_table = string.ascii_uppercase
+        self.lookup_table = C.LOOKUP_TABLES[(self.round_number-1) % 3]
         self.word = "ABABA"
 
     @property
