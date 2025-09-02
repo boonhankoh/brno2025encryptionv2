@@ -15,11 +15,6 @@ class C(BaseConstants):
     PLAYERS_PER_GROUP = None
     NUM_ROUNDS = 3
     TIME_FOR_TASK = 100
-    LOOKUP_TABLES = [
-        "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
-        "ZYXWVUTSRQPONMLKJIHGFEDCBA",
-        "FEDCBAGHIJKLMZYXWVUTSRQPON",
-    ]
 
 
 class Subsession(BaseSubsession):
@@ -35,7 +30,7 @@ class Subsession(BaseSubsession):
             random.seed(self.random_seed)
         self.payment_per_correct = Currency(0.10)
         self.time_for_task = C.TIME_FOR_TASK
-        self.lookup_table = C.LOOKUP_TABLES[(self.round_number-1) % 3]
+        self.lookup_table = "".join(random.sample(string.ascii_uppercase, k=26))
         self.word = "".join(random.choices(string.ascii_uppercase, k=5))
 
     @property
